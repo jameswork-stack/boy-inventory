@@ -1,0 +1,94 @@
+/* Main Container */
+.logs-container {
+  padding: 25px;
+  max-width: 900px;
+  margin: auto;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #1a1a1a;
+}
+
+/* Title */
+.logs-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+/* No Logs Text */
+.no-logs {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #777;
+  font-weight: 500;
+}
+
+/* Logs List Layout */
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Individual Log Card */
+.log-card {
+  padding: 18px;
+  border-radius: 10px;
+  background-color: #f9fbff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.log-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+/* Header */
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Log Type */
+.log-type {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1d72b8;
+}
+
+/* Details */
+.log-detail {
+  margin: 12px 0;
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Date */
+.log-date {
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+}
+
+/* Delete Button */
+.delete-log-btn {
+  padding: 7px 14px;
+  background-color: #e63946;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.delete-log-btn:hover {
+  background-color: #b71c1c;
+}
