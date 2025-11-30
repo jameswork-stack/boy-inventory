@@ -76,7 +76,6 @@ const Transactions = () => {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(11);
     doc.text("Brgy. Poblacion, Toledo City, Cebu", 105, 28, { align: "center" });
-    doc.text("Contact: 09123456789 | Email: boypaintcenter@gmail.com", 105, 34, { align: "center" });
 
     // ➖ Divider Line
     doc.setLineWidth(0.7);
