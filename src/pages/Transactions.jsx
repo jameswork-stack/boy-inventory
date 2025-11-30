@@ -59,60 +59,87 @@ const Transactions = () => {
 
   // 📄 PDF Generator
   const generateReceiptPDF = async (transaction) => {
-    const doc = new jsPDF();
-    const logo = new Image();
-    logo.src = "/images/logo.png";
+  const doc = new jsPDF();
 
-    logo.onload = () => {
-      doc.addImage(logo, "PNG", 10, 10, 30, 30);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(18);
-      doc.text("Boy Paint Center Toledo", 105, 20, { align: "center" });
+  // Load Logo
+  const logo = new Image();
+  logo.src = "/images/logo.png";
 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(11);
-      doc.text("Brgy. Poblacion, Toledo City, Cebu", 105, 28, { align: "center" });
+  logo.onload = () => {
+    // 🏢 Business Header with Logo
+    doc.addImage(logo, "PNG", 10, 10, 30, 30);
 
-      doc.line(10, 42, 200, 42);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(14);
-      doc.text("Sales Receipt", 105, 55, { align: "center" });
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("Boy Paint Center Toledo", 105, 20, { align: "center" });
 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(11);
-      doc.text(`Customer Name: ${transaction.customerName}`, 14, 70);
-      doc.text(
-        `Date: ${transaction.date ? transaction.date.toLocaleString() : "N/A"}`,
-        14,
-        78
-      );
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text("Brgy. Poblacion, Toledo City, Cebu", 105, 28, { align: "center" });
+    doc.text("Contact: 09123456789 | Email: boypaintcenter@gmail.com", 105, 34, { align: "center" });
 
-      let yPos = 95;
-      doc.line(10, yPos - 5, 200, yPos - 5);
+    // ➖ Divider Line
+    doc.setLineWidth(0.7);
+    doc.line(10, 42, 200, 42);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("Item", 14, yPos);
-      doc.text("Qty", 80, yPos);
-      doc.text("Price", 120, yPos);
-      doc.text("Total", 160, yPos);
+    // 🧾 Receipt Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Sales Receipt", 105, 55, { align: "center" });
+
+    // 📄 Customer & Date Info
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text(`Customer Name: ${transaction.customerName}`, 14, 70);
+    doc.text(
+      `Date: ${transaction.date ? transaction.date.toLocaleString() : "N/A"}`,
+      14, 78
+    );
+
+    let yPos = 95;
+
+    // 🔹 Table Header Line
+    doc.setLineWidth(0.5);
+    doc.line(10, yPos - 5, 200, yPos - 5);
+
+    // 🔹 Table Headers
+    doc.setFont("helvetica", "bold");
+    doc.text("Item", 14, yPos);
+    doc.text("Qty", 80, yPos);
+    doc.text("Price", 120, yPos);
+    doc.text("Total", 160, yPos);
+    yPos += 8;
+
+    // 📦 List Items
+    doc.setFont("helvetica", "normal");
+    transaction.items.forEach((item) => {
+      doc.text(item.name || "N/A", 14, yPos);
+      doc.text(String(item.qty || 0), 80, yPos);
+      doc.text(`P${Number(item.price).toFixed(0)}`, 120, yPos);
+      doc.text(`P${Number(item.total).toFixed(0)}`, 160, yPos);
       yPos += 8;
+    });
 
-      doc.setFont("helvetica", "normal");
-      transaction.items.forEach((item) => {
-        doc.text(item.name || "N/A", 14, yPos);
-        doc.text(String(item.qty || 0), 80, yPos);
-        doc.text(`₱${Number(item.price).toFixed(0)}`, 120, yPos);
-        doc.text(`₱${Number(item.total).toFixed(0)}`, 160, yPos);
-        yPos += 8;
-      });
+    // 🔹 Bottom Table Line
+    yPos += 2;
+    doc.line(10, yPos, 200, yPos);
 
-      yPos += 12;
-      doc.setFont("helvetica", "bold");
-      doc.text(`Total Amount: ₱${Number(transaction.totalAmount).toFixed(0)}`, 14, yPos);
+    // 💰 Final Total
+    yPos += 12;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text(`Total Amount: P${Number(transaction.totalAmount).toFixed(0)}`, 14, yPos);
 
-      doc.save(`Receipt_${transaction.id}.pdf`);
-    };
+    // 🙏 Footer Message
+    yPos += 20;
+    doc.setFont("helvetica", "italic");
+    doc.setFontSize(10);
+    doc.text("Thank you for your purchase!", 105, yPos, { align: "center" });
+
+    doc.save(`Receipt_${transaction.id}.pdf`);
   };
+};
+
 
   return (
     <div className="transactions-container">
